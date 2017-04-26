@@ -7,6 +7,7 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 
+require('electron-reload')(__dirname)
 console.info('main.js executing')
 
 // Keep a global reference of the window object, if you don't, the window will
