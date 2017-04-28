@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <title>Hello World!</title>
     <style media="screen">
+      * {
+        cursor: default;
+      }
+      html { height: 100%; }
       body {
+        min-height: 100%;
         background-color: red;
+        -webkit-app-region: drag;
+        -webkit-user-select: none;
+      }
+      select {
+        -webkit-app-region: no-drag;
       }
     </style>
   </head>
@@ -15,6 +25,11 @@
     We are using Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>.
+    <select class="" name="">
+      <option value="option">Option One</option>
+      <option value="option">Option Two</option>
+      <option value="option">Option Three</option>
+    </select>
   </body>
 
   <script>

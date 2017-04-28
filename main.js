@@ -13,18 +13,12 @@ console.info('main.js executing')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-let childWindow
 
 function createWindow () {
   console.info('creating mainWindow')
 
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1200, height: 800})
-  childWindow = new BrowserWindow({width: 600, height: 400,
-    parent: mainWindow,
-    modal: true,
-    show: false,
-  })
+  mainWindow = new BrowserWindow({width: 1200, height: 800, frame: false})
 
   // and load the index.html of the app.
   console.info('loading index.html into mainWindow')
@@ -33,14 +27,9 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }))
-  childWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'child_index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
