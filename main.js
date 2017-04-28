@@ -14,6 +14,10 @@ console.info('main.js executing')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
+// Get import fs paths
+console.info(app.getPath('home'));
+console.info(app.getName());  // app name
+
 function createWindow () {
   console.info('creating mainWindow')
 
@@ -29,7 +33,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -45,6 +49,16 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
+
+app.on('before-quit', () => { console.info('before-quit emitted') })
+app.on('will-quit', () => { console.info('will-quit emitted') })
+app.on('quit', () => { console.info('quit emitted') })
+
+app.on('browser-window-blur', () => {
+  console.info('browser lost focus')
+  // setTimeout(() => { app.quit() }, 3000)
+})
+app.on('browser-window-focus', () => { console.info('browser get focus') })
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
