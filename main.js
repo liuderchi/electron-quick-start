@@ -13,12 +13,15 @@ console.info('main.js executing')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let secondWindow
+
 
 function createWindow () {
   console.info('creating mainWindow')
 
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 1200, height: 800, minWidth: 500, minHeight: 400})
+  secondWindow = new BrowserWindow({width: 600, height: 400, minWidth: 500, minHeight: 400})
 
   // and load the index.html of the app.
   console.info('loading index.html into mainWindow')
@@ -27,9 +30,19 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }))
+  secondWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  console.log(BrowserWindow.getAllWindows());
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
+
+  mainWindow.on('focus', () => { console.log("mainWindow focused"); })
+  secondWindow.on('focus', () => { console.log("secondWindow focused"); })
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -39,12 +52,17 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+  secondWindow.on('closed', function () {
+    secondWindow = null
+  })
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
+
+app.on('browser-window-focus', () => { console.log('**app is focused'); })
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
