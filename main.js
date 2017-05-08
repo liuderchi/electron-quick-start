@@ -18,7 +18,7 @@ function createWindow () {
   console.info('creating mainWindow')
 
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1200, height: 800, frame: false})
+  mainWindow = new BrowserWindow({width: 1200, height: 800, minWidth: 500, minHeight: 400})
 
   // and load the index.html of the app.
   console.info('loading index.html into mainWindow')
