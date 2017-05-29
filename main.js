@@ -41,6 +41,10 @@ function createWindow () {
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
+  secondWindow.on('blur', () => {
+    console.log('secondWindow blur');  // NOTE triggered when init
+  })
+
   mainWindow.on('focus', () => { console.log("mainWindow focused"); })
   secondWindow.on('focus', () => { console.log("secondWindow focused"); })
 
@@ -61,8 +65,6 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
-
-app.on('browser-window-focus', () => { console.log('**app is focused'); })
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
