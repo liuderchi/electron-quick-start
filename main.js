@@ -4,6 +4,9 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
+// window state keeper
+const WinStateKeeper = require('electron-window-state')
+
 const path = require('path')
 const url = require('url')
 
@@ -13,15 +16,26 @@ console.info('main.js executing')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-let secondWindow
-
 
 function createWindow () {
   console.info('creating mainWindow')
 
+  let winState = new WinStateKeeper({
+    defaultWidth: 1200,
+    defaultHeight: 600
+  })
+
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1200, height: 800, minWidth: 500, minHeight: 400})
-  secondWindow = new BrowserWindow({width: 600, height: 400, minWidth: 500, minHeight: 400})
+  mainWindow = new BrowserWindow({
+    width: { winState },
+    height: { winState },
+    x: { winState },
+    y: { winState },
+    minWidth: 500,
+    minHeight: 400
+  })
+
+  winState.manage(mainWindow)
 
   // and load the index.html of the app.
   console.info('loading index.html into mainWindow')
@@ -30,23 +44,11 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }))
-  secondWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
-
-  console.log(BrowserWindow.getAllWindows());
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
-  secondWindow.on('blur', () => {
-    console.log('secondWindow blur');  // NOTE triggered when init
-  })
-
   mainWindow.on('focus', () => { console.log("mainWindow focused"); })
-  secondWindow.on('focus', () => { console.log("secondWindow focused"); })
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -55,9 +57,6 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null
-  })
-  secondWindow.on('closed', function () {
-    secondWindow = null
   })
 }
 
