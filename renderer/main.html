@@ -2,17 +2,21 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Readit</title>
+
+    <link rel="stylesheet" href="../bower_components/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="main.css">
+
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <h1>Readit</h1>
   </body>
 
   <script>
+    // attach jquery object after npm install
+    $ = require('jquery')
+
     require('./app.js')
   </script>
 </html>
