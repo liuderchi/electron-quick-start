@@ -1,3 +1,7 @@
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// All of the Node.js APIs are available in this process.
+// add btn click handlers
+$('.open-add-modal').click(() => {
+  $('#add-modal').addClass('is-active')
+})
+$('.close-add-modal').click(() => {
+  $('#add-modal').removeClass('is-active')
+})
