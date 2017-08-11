@@ -1,17 +1,15 @@
 const { app, ipcMain } = require('electron')
 const { win, createWindow } = require('./mainWindow')
+const readItem = require('./readItem')
 
 require('electron-reload')(__dirname)
 
 ipcMain.on('new-item', (event, itemURL) => {
-  const REPLY_DELAY = 2000
-  const REPLY_MSG = `got new item: ${itemURL}`
 
-  setTimeout(() => {
-    event.sender.send('new-item-success', REPLY_MSG)
-  }, REPLY_DELAY)
-
-  console.log(REPLY_MSG)
+  // get read item with readItem module
+  readItem(itemURL, (item) => {
+    event.sender.send('new-item-success', item)
+  })
 })
 
 app.on('ready', createWindow)
