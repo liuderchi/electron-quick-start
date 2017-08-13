@@ -35,6 +35,10 @@ $('#item-input').keyup((event) => {
 // Listen for new item from main process
 ipcRenderer.on('new-item-success', (event, item) => {
 
+  // update toreadItems and save it to localStorage
+  items.toreadItems.push(item)
+  items.saveItems()
+
   items.addItem(item)
 
   // Close and reset modal
@@ -43,3 +47,8 @@ ipcRenderer.on('new-item-success', (event, item) => {
   $('#add-button').removeClass('is-loading')
   $('.close-add-modal').removeClass('is-disabled')
 })
+
+// when app starts, load toreadItems from localStorage to update UI
+if (items.toreadItems.length) {
+  items.toreadItems.forEach(items.addItem)
+}
