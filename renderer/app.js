@@ -1,4 +1,5 @@
 const { ipcRenderer } = require('electron')
+const items = require('./items')
 
 // add btn click handlers
 $('.open-add-modal').click(() => {
@@ -33,7 +34,8 @@ $('#item-input').keyup((event) => {
 
 // Listen for new item from main process
 ipcRenderer.on('new-item-success', (event, item) => {
-  console.log('got reply from main: ', item)
+
+  items.addItem(item)
 
   // Close and reset modal
   $('#add-modal').removeClass('is-active')
